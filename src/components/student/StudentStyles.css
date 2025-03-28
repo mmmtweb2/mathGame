@@ -1,0 +1,1110 @@
+/* src/components/student/StudentStyles.css */
+/* === StudentDashboard.css === */
+/* תוספות ל-StudentStyles.css לעיצוב ידידותי לילדים */
+
+.vertical-exercise {
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border: 2px solid var(--primary-color);
+  max-width: 500px;
+}
+
+.vertical-problem {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.digit-cell, .answer-cell {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin: 0 2px;
+}
+
+.current {
+  background-color: rgba(76, 175, 80, 0.15);
+  border: 2px solid var(--primary-color);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(76, 175, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+.carry-cell.has-carry {
+  color: var(--carry-color);
+  font-weight: bold;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.separator-line {
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  border-radius: 3px;
+  margin: 8px 0 12px 0;
+}
+
+.answer-input {
+  width: 34px;
+  height: 34px;
+  font-size: 24px;
+  text-align: center;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: white;
+  color: var(--secondary-color);
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.answer-input:focus {
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+  transform: scale(1.05);
+}
+
+.exercise-controls {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 24px;
+  border: 1px dashed var(--secondary-color);
+}
+
+.exercise-controls p {
+  color: var(--secondary-color);
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.carry-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.carry-button {
+  padding: 10px 20px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 30px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.carry-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carry-button.selected {
+  background-color: var(--secondary-color);
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.next-column-button {
+  padding: 12px 24px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.next-column-button:hover:not(:disabled) {
+  background-color: #43a047;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+.next-column-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.hint-button {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint-button:hover {
+  transform: scale(1.1);
+  background-color: #f57c00;
+}
+
+.hint-content {
+  background-color: #fff9c4;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  border-left: 4px solid var(--accent-color);
+  font-size: 14px;
+  line-height: 1.5;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  animation: feedbackFadeIn 0.3s, feedbackFadeOut 0.3s 1.7s;
+  pointer-events: none;
+}
+
+@keyframes feedbackFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes feedbackFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.feedback-animation.success {
+  color: var(--success-color);
+}
+
+.feedback-animation.error {
+  color: var(--error-color);
+}
+
+.feedback-text {
+  font-size: 3rem;
+  font-weight: bold;
+  animation: scaleUp 0.5s ease, bounce 0.5s 0.5s ease-in-out;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.student-dashboard {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #e8f5e9;
+  }
+  
+  .dashboard-header {
+    background-color: #2e7d32;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-header h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .user-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .welcome-text {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .logout-button {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #c62828;
+  }
+  
+  .dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  /* === ExerciseSelector.css === */
+  .exercise-selector {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exercise-selector h2 {
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .exercise-type-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .exercise-type-section h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #2e7d32;
+    font-size: 20px;
+  }
+  
+  .format-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .exercise-button {
+    padding: 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .exercise-button:hover {
+    background-color: #388e3c;
+  }
+  
+  .exercise-button.custom {
+    background-color: #1976d2;
+  }
+  
+  .exercise-button.custom:hover {
+    background-color: #1565c0;
+  }
+  
+  /* === ExerciseArea.css === */
+  .exercise-area {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+  }
+  
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .back-button {
+    background-color: #757575;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: background-color 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #616161;
+  }
+  
+  .problem-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .check-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+  }
+  
+  .check-button:hover {
+    background-color: #388e3c;
+  }
+  
+  .check-button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+  }
+  
+  /* === ExerciseFeedback.css === */
+  .exercise-feedback {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .exercise-feedback.correct {
+    background-color: #e8f5e9;
+    border: 2px solid #4caf50;
+  }
+  
+  .exercise-feedback.incorrect {
+    background-color: #fbe9e7;
+    border: 2px solid #ff5722;
+  }
+  
+  .exercise-feedback h3 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .exercise-feedback.correct h3 {
+    color: #2e7d32;
+  }
+  
+  .exercise-feedback.incorrect h3 {
+    color: #d32f2f;
+  }
+  
+  .explanation {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 15px 0;
+    text-align: right;
+    line-height: 1.5;
+    border-right: 4px solid #ff5722;
+  }
+  
+  .next-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .next-button:hover {
+    background-color: #388e3c;
+  }
+  
+  /* === VerticalExercise.css === */
+  /* סגנונות לתרגיל במאונך - להוסיף ל-StudentStyles.css */
+.vertical-exercise {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.vertical-problem {
+  display: inline-block;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  direction: ltr; /* משמאל לימין עבור מספרים */
+}
+
+.carry-row, .number-row, .operator-row, .answer-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 40px);
+  grid-gap: 0;
+  justify-content: end;
+  margin-bottom: 5px;
+}
+
+.digit-cell, .answer-cell, .carry-cell, .operator-cell {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carry-cell {
+  height: 20px;
+  font-size: 16px;
+  color: #f44336;
+}
+
+.operator-cell {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.operator-row {
+  margin-bottom: 10px;
+}
+
+.current {
+  background-color: rgba(25, 118, 210, 0.1);
+  border-radius: 4px;
+}
+
+.separator-line {
+  height: 2px;
+  background-color: #1976d2;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.answer-input {
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  text-align: center;
+  padding: 0;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  outline: none;
+}
+
+.exercise-controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.carry-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.carry-button {
+  padding: 8px 16px;
+  border: 2px solid #1976d2;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.carry-button.selected {
+  background-color: #1976d2;
+  color: white;
+}
+
+.next-column-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.next-column-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+  
+  .operator-cell {
+    font-weight: bold;
+    color: #1976d2;
+  }
+  
+  .answer-row hr {
+    width: 100%;
+    margin-bottom: 10px;
+    border: none;
+    border-top: 2px solid #1976d2;
+  }
+  
+  .answer-input {
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    padding: 5px;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .answer-input:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  }
+  
+  /* === HorizontalExercise.css === */
+  .horizontal-exercise {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .horizontal-problem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+  }
+  
+  .horizontal-problem .number {
+    font-weight: bold;
+  }
+  
+  .horizontal-problem .operator {
+    color: #1976d2;
+    font-weight: bold;
+  }
+  
+  .horizontal-problem .equals {
+    font-weight: bold;
+  }
+  
+  .horizontal-problem .answer-input {
+    width: 80px;
+    height: 50px;
+    font-size: 28px;
+    text-align: center;
+    padding: 5px;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .horizontal-problem .answer-input:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  }
+  
+  /* === CustomExerciseCreator.css === */
+  .custom-exercise-creator {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .creator-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .creator-header h2 {
+    margin: 0;
+    color: #2e7d32;
+  }
+  
+  .creator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .input-group label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .input-group input:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  }
+  
+  .error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .create-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .create-button:hover {
+    background-color: #388e3c;
+  }
+
+  /* סגנונות לתרגיל במאונך */
+.vertical-exercise {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.vertical-problem {
+  display: inline-block;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  direction: ltr; /* משמאל לימין עבור מספרים */
+}
+
+.carry-row, .number-row, .operator-row, .answer-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end; /* יישור לימין */
+  margin-bottom: 5px;
+}
+
+.digit-cell, .operator-cell, .answer-cell, .carry-cell {
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carry-cell {
+  height: 20px;
+  font-size: 16px;
+  color: #f44336;
+}
+
+.operator-cell {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.current {
+  background-color: rgba(25, 118, 210, 0.1);
+  border-radius: 4px;
+}
+
+.answer-row hr {
+  width: 100%;
+  margin-bottom: 10px;
+  border: none;
+  border-top: 2px solid #1976d2;
+}
+
+.answer-input {
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  text-align: center;
+  padding: 0;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  outline: none;
+}
+
+.exercise-controls {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.carry-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.carry-button {
+  padding: 8px 16px;
+  border: 2px solid #1976d2;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.carry-button.selected {
+  background-color: #1976d2;
+  color: white;
+}
+
+.next-column-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.next-column-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+/* תוספות ל-StudentStyles.css לעיצוב הפידבק */
+.exercise-feedback {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.exercise-feedback.correct {
+  background-color: #e8f5e9;
+  border-left: 6px solid #4caf50;
+}
+
+.exercise-feedback.incorrect {
+  background-color: #fff8e1;
+  border-left: 6px solid #ff9800;
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.feedback-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.success-icon {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+}
+
+.error-icon {
+  background-color: #ff9800;
+  color: white;
+  box-shadow: 0 3px 10px rgba(255, 152, 0, 0.3);
+}
+
+.exercise-feedback h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.exercise-feedback.correct h3 {
+  color: #2e7d32;
+}
+
+.exercise-feedback.incorrect h3 {
+  color: #ef6c00;
+}
+
+.celebration-text {
+  font-size: 20px;
+  margin: 15px 0;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.correction-text {
+  font-size: 18px;
+  margin: 15px 0;
+  color: #ef6c00;
+}
+
+.correct-answer {
+  font-weight: bold;
+  font-size: 24px;
+  margin: 0 5px;
+}
+
+.explanation-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: right;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.explanation-details {
+  line-height: 1.6;
+}
+
+.explanation-steps {
+  margin: 20px 0;
+}
+
+.step {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.step:last-child {
+  border-bottom: none;
+}
+
+.step-header {
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 5px;
+}
+
+.step-content {
+  padding-right: 15px;
+}
+
+.carry-note, .borrow-note {
+  color: #e65100;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.calculation {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.carry-result {
+  color: #4caf50;
+  margin-top: 5px;
+}
+
+.final-result {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #1976d2;
+  text-align: center;
+}
+
+.next-button {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.next-button:hover {
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.arrow-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  transition: transform 0.3s;
+}
+
+.next-button:hover .arrow-icon {
+  transform: translateX(5px);
+}
+
+.confetti-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* אנימציה של קונפטי */
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color);
+  top: -10px;
+  opacity: 0.8;
+  animation: confetti-fall var(--fall-duration) ease-in var(--fall-delay) infinite;
+}
+
+/* סגנונות עבור תמיכה רב-חושית */
+.digit-focus {
+  animation: pulse 1.5s infinite;
+  transform-origin: center;
+  transition: all 0.3s;
+}
+
+/* צבעים עם ניגודיות גבוהה אבל לא עייפים לעיניים */
+:root {
+  --primary-text: #1a1a1a;     /* כמעט שחור, לא שחור מלא */
+  --background-light: #f8f9fa; /* רקע בהיר מאוד אבל לא לבן מלא */
+  --highlight-color: #4361ee;  /* כחול מודגש אבל לא כואב */
+  --success-color: #38b000;    /* ירוק שונה מהסטנדרטי */
+  --error-gentle: #e63946;     /* אדום רך יותר */
+}
+
+/* הגדלה אוטומטית של האזור הפעיל */
+.current-focus {
+  transform: scale(1.2);
+  z-index: 5;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* תמיכה בקוראי מסך ואביזרי נגישות */
+.hidden-instructions {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

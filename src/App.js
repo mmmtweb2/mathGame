@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import Login from './components/Login';
+import TeacherDashboard from './components/teacher/TeacherDashboard';
+import StudentDashboard from './components/student/StudentDashboard';
+
+// יצירת נתיבים ברמה הגבוהה
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />
+  },
+  {
+    path: '/teacher/*',
+    element: <TeacherDashboard />
+  },
+  {
+    path: '/student/*',
+    element: <StudentDashboard />
+  }
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <div className="app" dir="rtl">
+        <RouterProvider router={router} />
+      </div>
+    </AuthProvider>
   );
 }
 
