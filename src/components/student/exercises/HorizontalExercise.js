@@ -2,7 +2,6 @@
 import React from 'react';
 import '../StudentStyles.css';
 
-
 function HorizontalExercise({ problem, userAnswer, onAnswerChange }) {
     const { num1, num2, operator } = problem;
 
@@ -19,6 +18,9 @@ function HorizontalExercise({ problem, userAnswer, onAnswerChange }) {
                     value={userAnswer}
                     onChange={(e) => onAnswerChange(e.target.value)}
                     placeholder="?"
+                    inputMode="numeric"
+                    aria-label="תיבת תשובה"
+                    autoFocus
                 />
             </div>
         </div>

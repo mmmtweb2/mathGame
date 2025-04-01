@@ -1,3 +1,6 @@
+import React from 'react';
+import './TeacherStyles.css';
+
 // קומפוננטת המחשה ויזואלית לערך המקום
 function PlaceValueVisualizer({ number }) {
     // פירוק המספר לספרות ולערכי מקום
@@ -44,8 +47,8 @@ function PlaceValueVisualizer({ number }) {
                                 <div
                                     key={i}
                                     className={`block ${index === digits.length - 1 ? 'units' :
-                                            index === digits.length - 2 ? 'tens' :
-                                                index === digits.length - 3 ? 'hundreds' : 'thousands'
+                                        index === digits.length - 2 ? 'tens' :
+                                            index === digits.length - 3 ? 'hundreds' : 'thousands'
                                         }`}
                                     style={{
                                         width: index === digits.length - 1 ? '10px' :
@@ -63,3 +66,5 @@ function PlaceValueVisualizer({ number }) {
         </div>
     );
 }
+
+export default PlaceValueVisualizer;

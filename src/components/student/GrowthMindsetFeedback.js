@@ -1,3 +1,6 @@
+import React, { useState } from 'react';
+import './StudentStyles.css';
+
 // קומפוננטת פידבק עם דגש על צמיחה
 function GrowthMindsetFeedback({ result, improvement, streak }) {
     // מסרים עם דגש על תהליך ומאמץ במקום על יכולת מולדת
@@ -64,3 +67,5 @@ function GrowthMindsetFeedback({ result, improvement, streak }) {
         </div>
     );
 }
+
+export default GrowthMindsetFeedback;

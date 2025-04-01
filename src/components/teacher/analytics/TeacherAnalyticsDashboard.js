@@ -1,3 +1,11 @@
+import React, { useState, useEffect } from 'react';
+// ייבוא קומפוננטות ניתוח
+import ClassOverview from './ClassOverview';
+import DetailedAnalysis from './DetailedAnalysis';
+import DiagnosticReport from './DiagnosticReport';
+import LearningPatterns from './LearningPatterns';
+import StudentDetailedModal from './StudentDetailedModal';
+
 function TeacherAnalyticsDashboard({ classId }) {
     const [classData, setClassData] = useState(null);
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -116,3 +124,5 @@ function TeacherAnalyticsDashboard({ classId }) {
         </div>
     );
 }
+
+export default TeacherAnalyticsDashboard;

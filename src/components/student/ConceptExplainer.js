@@ -1,3 +1,6 @@
+import React from 'react';
+import './StudentStyles.css';
+
 // קומפוננטה להסבר מושגים דרך מטאפורות מחיי היומיום
 function ConceptExplainer({ concept }) {
     const explanations = {
@@ -55,3 +58,5 @@ function ConceptExplainer({ concept }) {
         </div>
     );
 }
+
+export default ConceptExplainer;

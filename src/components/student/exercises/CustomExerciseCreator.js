@@ -1,12 +1,19 @@
 // src/components/student/exercises/CustomExerciseCreator.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../StudentStyles.css';
 
-
-function CustomExerciseCreator({ exerciseType, exerciseFormat, onCreateExercise, onBack }) {
-    const [num1, setNum1] = useState('');
-    const [num2, setNum2] = useState('');
+function CustomExerciseCreator({ exerciseType, exerciseFormat, onCreateExercise, onBack, initialValues = null }) {
+    const [num1, setNum1] = useState(initialValues?.num1?.toString() || '');
+    const [num2, setNum2] = useState(initialValues?.num2?.toString() || '');
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        // איפוס השדות אם הערכים ההתחלתיים השתנו
+        if (initialValues) {
+            setNum1(initialValues.num1.toString());
+            setNum2(initialValues.num2.toString());
+        }
+    }, [initialValues]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,42 +55,72 @@ function CustomExerciseCreator({ exerciseType, exerciseFormat, onCreateExercise,
         });
     };
 
+    const clearFields = () => {
+        setNum1('');
+        setNum2('');
+        setError('');
+    };
+
     return (
         <div className="custom-exercise-creator">
-            <div className="creator-header">
-                <button className="back-button" onClick={onBack}>חזרה לבחירת תרגיל</button>
-                <h2>יצירת תרגיל {exerciseType === 'addition' ? 'חיבור' : 'חיסור'} {exerciseFormat === 'vertical' ? 'במאונך' : 'במאוזן'}</h2>
-            </div>
+            <h3>צור תרגיל {exerciseType === 'addition' ? 'חיבור' : 'חיסור'} {exerciseFormat === 'vertical' ? 'במאונך' : 'במאוזן'}</h3>
+
+            {error && <div className="error-message">{error}</div>}
 
             <form onSubmit={handleSubmit} className="creator-form">
-                {error && <div className="error-message">{error}</div>}
+                <div className="exercise-preview">
+                    {exerciseFormat === 'vertical' ? (
+                        <div className="vertical-preview">
+                            <div className="preview-line">{num1 || '?'}</div>
+                            <div className="preview-operator">{exerciseType === 'addition' ? '+' : '-'} {num2 || '?'}</div>
+                            <div className="preview-separator">_____</div>
+                            <div className="preview-result">?</div>
+                        </div>
+                    ) : (
+                        <div className="horizontal-preview" dir="ltr">
+                            <span>{num1 || '?'}</span>
+                            <span className="preview-operator">{exerciseType === 'addition' ? '+' : '-'}</span>
+                            <span>{num2 || '?'}</span>
+                            <span>=</span>
+                            <span>?</span>
+                        </div>
+                    )}
+                </div>
 
                 <div className="input-group">
-                    <label>מספר ראשון:</label>
+                    <label htmlFor="num1">מספר ראשון:</label>
                     <input
                         type="number"
+                        id="num1"
                         value={num1}
                         onChange={(e) => setNum1(e.target.value)}
                         min="1"
                         max="999"
+                        placeholder="הזן מספר"
+                        autoFocus
                     />
                 </div>
 
                 <div className="input-group">
-                    <label>מספר שני:</label>
+                    <label htmlFor="num2">מספר שני:</label>
                     <input
                         type="number"
+                        id="num2"
                         value={num2}
                         onChange={(e) => setNum2(e.target.value)}
                         min="1"
                         max="999"
+                        placeholder="הזן מספר"
                     />
                 </div>
 
-                <button type="submit" className="create-button">צור תרגיל</button>
+                <div className="button-group">
+                    <button type="submit" className="create-button">צור תרגיל</button>
+                    <button type="button" className="clear-button" onClick={clearFields}>נקה שדות</button>
+                </div>
             </form>
         </div>
     );
 }
 
-export default CustomExerciseCreator;   
+export default CustomExerciseCreator;

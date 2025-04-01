@@ -1,3 +1,8 @@
+import React, { useState, useEffect } from 'react';
+import LineChart from '../../charts/LineChart';
+import BarChart from '../../charts/BarChart';
+import MultiLineChart from '../../charts/MultiLineChart';
+
 function ProgressTrackingChart({ studentId, dateRange = 'semester' }) {
     const [progressData, setProgressData] = useState(null);
     const [viewMode, setViewMode] = useState('general'); // general, topics, error-types
@@ -402,3 +407,5 @@ function ProgressTrackingChart({ studentId, dateRange = 'semester' }) {
         </div>
     );
 }
+
+export default ProgressTrackingChart;

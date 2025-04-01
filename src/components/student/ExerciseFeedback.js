@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import './StudentStyles.css';
 
-function ExerciseFeedback({ isCorrect, explanation, correctAnswer, problem, onNext }) {
+function ExerciseFeedback({ isCorrect, explanation, correctAnswer, problem, onNext, nextButtonText = "לתרגיל הבא" }) {
     // מאגר תגובות חיוביות
     const praises = [
         'כל הכבוד! אתה אלוף/ה!',
@@ -214,7 +214,7 @@ function ExerciseFeedback({ isCorrect, explanation, correctAnswer, problem, onNe
             )}
 
             <button onClick={onNext} className="next-button">
-                לתרגיל הבא <span className="arrow-icon">→</span>
+                {nextButtonText} <span className="arrow-icon">→</span>
             </button>
         </div>
     );

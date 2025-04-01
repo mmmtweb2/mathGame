@@ -12,12 +12,32 @@ function ExerciseArea({ exercise, onBack }) {
     const [isCorrect, setIsCorrect] = useState(null);
     const [explanation, setExplanation] = useState('');
     const [showFeedback, setShowFeedback] = useState(false);
+    const [creatingNewCustomExercise, setCreatingNewCustomExercise] = useState(false);
+    const [lastCustomExercise, setLastCustomExercise] = useState(null);
 
     useEffect(() => {
+        // איפוס כאשר סוג התרגיל משתנה
+        setCurrentProblem(null);
+        setUserAnswer('');
+        setIsCorrect(null);
+        setShowFeedback(false);
+        setCreatingNewCustomExercise(false);
+
+        // יצירת תרגיל חדש אם לא מדובר בתרגיל מותאם אישית
         if (!exercise.isCustom) {
             generateNewExercise();
         }
-    }, [exercise]);
+    }, [exercise.type, exercise.format, exercise.isCustom]);
+
+    // וידוא שיש תרגיל מוכן בטעינה ראשונית של קומפוננטת תרגיל רגיל
+    useEffect(() => {
+        if (!exercise.isCustom && !currentProblem && !showFeedback) {
+            generateNewExercise();
+        } else if (exercise.isCustom && !currentProblem && !creatingNewCustomExercise) {
+            // אם זה תרגיל מותאם אישית ואין תרגיל נוכחי, מעבר למצב יצירה
+            setCreatingNewCustomExercise(true);
+        }
+    }, [exercise.isCustom, currentProblem, showFeedback, creatingNewCustomExercise]);
 
     const generateNewExercise = () => {
         // לוגיקה פשוטה ליצירת תרגילים
@@ -43,13 +63,16 @@ function ExerciseArea({ exercise, onBack }) {
         setUserAnswer('');
         setIsCorrect(null);
         setShowFeedback(false);
+        setCreatingNewCustomExercise(false);
     };
 
     const handleCustomExercise = (problem) => {
         setCurrentProblem(problem);
+        setLastCustomExercise(problem); // שמירת התרגיל האחרון שנוצר
         setUserAnswer('');
         setIsCorrect(null);
         setShowFeedback(false);
+        setCreatingNewCustomExercise(false);
     };
 
     const handleAnswerChange = (value) => {
@@ -151,17 +174,54 @@ function ExerciseArea({ exercise, onBack }) {
     };
 
     const nextExercise = () => {
-        generateNewExercise();
+        if (exercise.isCustom) {
+            // עבור לטופס יצירת תרגיל חדש
+            setCreatingNewCustomExercise(true);
+            setCurrentProblem(null);
+            setShowFeedback(false);
+        } else {
+            generateNewExercise();
+        }
     };
 
-    if (exercise.isCustom && !currentProblem) {
+    // אם במצב יצירת תרגיל מותאם אישית
+    if (exercise.isCustom && (creatingNewCustomExercise || !currentProblem)) {
         return (
-            <CustomExerciseCreator
-                exerciseType={exercise.type}
-                exerciseFormat={exercise.format}
-                onCreateExercise={handleCustomExercise}
-                onBack={onBack}
-            />
+            <div className="exercise-area">
+                <div className="exercise-header">
+                    <button className="back-button" onClick={onBack}>חזרה לבחירת תרגיל</button>
+                    <h2>
+                        {showFeedback ? 'יצירת תרגיל חדש' : 'יצירת תרגיל'}
+                        {` ${exercise.type === 'addition' ? 'חיבור' : 'חיסור'} ${exercise.format === 'vertical' ? 'במאונך' : 'במאוזן'}`}
+                    </h2>
+                </div>
+
+                <CustomExerciseCreator
+                    exerciseType={exercise.type}
+                    exerciseFormat={exercise.format}
+                    onCreateExercise={handleCustomExercise}
+                    onBack={onBack}
+                    initialValues={lastCustomExercise} // העברת הערכים האחרונים כערכי התחלה
+                />
+            </div>
+        );
+    }
+
+    // אם אין תרגיל נוכחי ואנחנו לא במצב משוב, נציג הודעת טעינה
+    if (!currentProblem && !showFeedback) {
+        return (
+            <div className="exercise-area">
+                <div className="exercise-header">
+                    <button className="back-button" onClick={onBack}>חזרה לבחירת תרגיל</button>
+                    <h2>
+                        {exercise.type === 'addition' ? 'תרגיל חיבור' : 'תרגיל חיסור'}
+                        {exercise.format === 'vertical' ? ' במאונך' : ' במאוזן'}
+                    </h2>
+                </div>
+                <div className="loading-container">
+                    <p>טוען תרגיל...</p>
+                </div>
+            </div>
         );
     }
 
@@ -183,11 +243,13 @@ function ExerciseArea({ exercise, onBack }) {
                             onSubmitAnswer={handleSubmitAnswer}
                         />
                     ) : (
-                        <HorizontalExercise
-                            problem={currentProblem}
-                            userAnswer={userAnswer}
-                            onAnswerChange={handleAnswerChange}
-                        />
+                        <div dir="ltr"> {/* הוספת דירקטיב LTR לתרגילים במאוזן */}
+                            <HorizontalExercise
+                                problem={currentProblem}
+                                userAnswer={userAnswer}
+                                onAnswerChange={handleAnswerChange}
+                            />
+                        </div>
                     )}
 
                     {exercise.format !== 'vertical' && (
@@ -209,6 +271,7 @@ function ExerciseArea({ exercise, onBack }) {
                     correctAnswer={currentProblem.correctAnswer}
                     problem={currentProblem}
                     onNext={nextExercise}
+                    nextButtonText={exercise.isCustom ? "צור תרגיל חדש" : "לתרגיל הבא"}
                 />
             )}
         </div>

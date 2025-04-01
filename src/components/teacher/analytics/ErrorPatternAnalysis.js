@@ -1,10 +1,27 @@
+import React, { useState, useEffect } from 'react';
+import BarChart from '../../charts/BarChart';
+
 function ErrorPatternAnalysis({ studentId, exerciseData }) {
     const [errorCategories, setErrorCategories] = useState([]);
     const [specificPatterns, setSpecificPatterns] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        analyzeErrors(exerciseData);
+        if (!exerciseData) {
+            setError("נתוני תרגילים חסרים");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            analyzeErrors(exerciseData);
+            setLoading(false);
+        } catch (err) {
+            setError("שגיאה בניתוח הנתונים: " + err.message);
+            setLoading(false);
+        }
     }, [exerciseData]);
 
     const analyzeErrors = (data) => {
@@ -383,8 +400,14 @@ function ErrorPatternAnalysis({ studentId, exerciseData }) {
             }
         });
 
+        if (loading) return <div className="loading-spinner">טוען נתונים...</div>;
+        if (error) return <div className="error-message">{error}</div>;
+        if (errorCategories.length === 0) return <div>לא נמצאו דפוסי שגיאות.</div>;
+
+
         return recommendations;
     };
+
 
     return (
         <div className="error-pattern-analysis">
@@ -514,3 +537,5 @@ function ErrorPatternAnalysis({ studentId, exerciseData }) {
         </div>
     );
 }
+
+export default ErrorPatternAnalysis;
